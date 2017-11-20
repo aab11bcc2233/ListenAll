@@ -10,7 +10,7 @@ import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
-    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,19 +21,19 @@ class MainActivity : AppCompatActivity() {
         if (mediaPlayer != null) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mediaPlayer?.setAudioAttributes(
+                mediaPlayer.setAudioAttributes(
                         AudioAttributes.Builder()
                                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                                 .setLegacyStreamType(AudioManager.STREAM_MUSIC)
                                 .build()
                 )
             } else {
-                mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
             }
 
-            mediaPlayer?.setDataSource("http://192.168.2.120:8080/xxx.mp3")
+            mediaPlayer.setDataSource("http://192.168.2.120:8080/xxx.mp3")
 
-            mediaPlayer?.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
+            mediaPlayer.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
                 override fun onPrepared(mp: MediaPlayer?) {
                     toast("准备成功")
                     mediaPlayer?.duration
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-            mediaPlayer?.prepareAsync()
+            mediaPlayer.prepareAsync()
 
         }
     }
@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (mediaPlayer != null) {
-            mediaPlayer?.stop()
-            mediaPlayer?.release()
+            mediaPlayer.stop()
+            mediaPlayer.release()
         }
 
     }
